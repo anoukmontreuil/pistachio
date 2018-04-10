@@ -1,0 +1,975 @@
+@import "style/reset.scss";
+@import "style/variables.scss";
+@import "style/mixins.scss";
+@import "style/fonts.scss";
+@import "style/icons.scss";
+@import "style/loadingAnimation.scss";
+
+html, body, #root{
+  width: 100%;
+  height: 100%;
+  color: $black;
+  font-family: $sans-font;
+}
+
+::selection {
+  background: #acc85c;
+  color: $white;
+}
+::-moz-selection {
+  background: #acc85c;
+  color: $white;
+}
+
+a, button {
+  cursor: pointer;
+  @include transition (all, 0.25s, ease);
+}
+
+input, textarea, select {
+  @include transition (all, 0.25s, ease);
+}
+
+a {
+  color: $black;
+  text-decoration: none;
+  &:hover {
+    color: $blackest;
+  }
+  &:focus {
+    color: $black;
+  }
+}
+
+.displayInlineBlock {
+  display: inline-block !important;
+}
+
+.flexContain {
+  display: flex;
+  width: 100%;
+}
+
+.hideOnMobile {
+  @include bp-mobileOnly {
+    display: none !important;
+  }
+}
+
+// ########  ##     ## ######## ########  #######  ##    ##  ######
+// ##     ## ##     ##    ##       ##    ##     ## ###   ## ##    ##
+// ##     ## ##     ##    ##       ##    ##     ## ####  ## ##
+// ########  ##     ##    ##       ##    ##     ## ## ## ##  ######
+// ##     ## ##     ##    ##       ##    ##     ## ##  ####       ##
+// ##     ## ##     ##    ##       ##    ##     ## ##   ### ##    ##
+// ########   #######     ##       ##     #######  ##    ##  ######
+
+button {
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0.1);
+  margin: 0.5em 0;
+  padding: 0.7em 1em;
+  background-color: $primaryMed;
+  color: $white;
+  border: none;
+    &:hover, &:focus {
+      background-color: $primaryDark;
+      color: $grayLight;
+    }
+    &:active {
+      box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0);
+    }
+    &:focus {
+      outline: $black !important;
+    }
+    &.secondaryBtn {
+      background-color: $black;
+      display: block;
+      &:hover {
+        box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0);
+        background-color: $blackest;
+        color: $grayLight;
+      }
+      &:hover {
+        background-color: $blackest;
+        color: $white;
+      }
+    }
+    &.tertiaryBtn {
+      background-color: $grayLight;
+      color: $black;
+      &:hover {
+        background-color: $grayMed;
+      }
+      &:focus {
+        color: $blackest;
+      }
+    }
+}
+.googleSignInBtn {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5em 0 0 !important;
+  background-color: $white;
+  box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset ;
+  border: 1px solid rgba(51, 42, 29, 0.1);
+  color: $black;
+  img {
+    height: 5em;
+  }
+  &:hover {
+      background-color: $whitish;
+      border: 1px solid rgba(51, 42, 29, 0.5);
+      color: $blackest;
+  }
+  &:focus {
+    color: $grayDark;
+  }
+}
+
+//    ###    ########  ########
+//   ## ##   ##     ## ##     ##
+//  ##   ##  ##     ## ##     ##
+// ##     ## ########  ########
+// ######### ##        ##
+// ##     ## ##        ##
+// ##     ## ##        ##
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $whitish;
+  display: flex;
+}
+
+.Home{
+  justify-content: center;
+  padding-left: $sidebar-width;
+  @include transition (all, 0.5s, ease)
+}
+
+.App > header {
+    z-index: 100;
+    height: $header-height-mobile;
+    font-family: $serif-font;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 40px 4px rgba(54, 39, 28, 0.1);
+    @include bp-md {
+      height: $header-height;
+    }
+    @include printQuery {
+      display: none;
+    };
+    a {
+      padding: 0 0.5em;
+      @include bp-md {
+        padding: 0 1em;
+      }
+    }
+    form {
+      display: flex;
+      margin: 0;
+      align-items: center;
+      justify-content: flex-end;
+      flex-grow: 2;
+      .searchbar {
+        background-color: $transparentColor;
+        box-shadow: none;
+        outline: none;
+      }
+      input {
+        box-shadow: none;
+        background-color: $white !important;
+        border: 0px solid $white;
+        font-family: $serif-font;
+        font-size: 1.1em;
+        margin: 0;
+        text-align: right;
+        letter-spacing: 0.05em;
+        width: 50%;
+        padding: 0;
+        outline: none;
+        @include bp-md {
+          font-size: 1.6em;
+        }
+        &:focus, &:active {
+          letter-spacing: 0;
+          outline: none;
+          border: 0;
+          &::placeholder {
+            color: $primaryLight;
+          }
+        }
+        &::placeholder {
+          color: $grayMed;
+        }
+      }
+      button {
+        &:focus, &:active {
+          outline: 0;
+          border: 0;
+          box-shadow: none;
+        }
+      }
+    }
+    .logo {
+      text-transform: uppercase;
+      font-size: 4vw;
+      font-weight: 600;
+      padding-left: 0.4em;
+      letter-spacing: 0.16em;
+      @include bp-md {
+        font-size: 1.6em;
+      }
+    }
+    .accountLinks {
+      display: block;
+      text-align: right;
+      font-size: 0.8em;
+      padding: 16px 16px 0;
+      @include bp-md {
+        padding: 1.5em 1.5em 0;
+      };
+      @include bp-lg {
+        padding-top: 1.4em 1.5em 0;
+      };
+      & > * {
+        display: block;
+        padding: 0;
+        line-height: 1.2em;
+      }
+      a {
+        color: $primaryDark;
+        &:hover {
+          color: $primaryLight;
+        }
+        &:focus {
+          color: $primaryMed;
+        }
+      }
+      p, a {
+        display: none;
+        @include bp-lg {
+          display: block;
+        }
+      }
+      i {
+        cursor: pointer;
+        @include bp-lg {
+          display: none;
+        };
+      }
+    }
+    div {
+        display: flex;
+    }
+    .newRecipeBtn {
+      height: $header-height-mobile;
+      background-color: $black;
+      font-family: $sans-font;
+      color: $white;
+      padding: 0.5em 0.8em;
+      line-height: 2em;
+      @include bp-md {
+        height: $header-height;
+        padding: 1em 1.5em;
+      }
+      i {
+        position: relative;
+        top: 3px;
+        @include bp-md {
+          top: 6px;
+        };
+      }
+      span {
+        padding-left: 0.5em;
+          display: none;
+          @include bp-lg {
+            display: inline-block;
+          }
+      }
+      &:hover {
+        background-color: $primaryDark;
+      }
+      &:focus {
+        color: $grayLight;
+      }
+    }
+  }
+
+  aside{
+    width: $sidebar-width;
+    flex: none;
+    position: fixed;
+    left: 0;
+    z-index: 99;
+    height: 100%;
+    padding-top: $header-height-mobile;
+    background-color: $white;
+    @include transition (all, 0.5s, ease)
+    @include bp-md {
+      padding-top: $header-height;
+    }
+  }
+
+
+#main {
+  padding-top: $header-height-mobile;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 4;
+  .isHidden {
+    display: none;
+  }
+  @include bp-md {
+    padding-top: $header-height;
+  }
+}
+
+//  ######  #### ########  ######## ########     ###    ########   ######
+// ##    ##  ##  ##     ## ##       ##     ##   ## ##   ##     ## ##    ##
+// ##        ##  ##     ## ##       ##     ##  ##   ##  ##     ## ##
+//  ######   ##  ##     ## ######   ########  ##     ## ########   ######
+//       ##  ##  ##     ## ##       ##     ## ######### ##   ##         ##
+// ##    ##  ##  ##     ## ##       ##     ## ##     ## ##    ##  ##    ##
+//  ######  #### ########  ######## ########  ##     ## ##     ##  ######
+
+aside {
+  &.cookbookMarks {
+    background-color: $white;
+    font-family: $serif-font;
+    h3 {
+      padding: 0 1em 1em;
+    }
+    ul {
+      padding: 1em 0;
+      li{
+        padding: 1em;
+        @include transition (all, 0.5s, ease)
+        &.selected {
+          background-color: rgba(38, 36, 36, 0.06);
+          border-left: 0.2em solid $primaryDark;
+          font-weight: 600;
+          font-size: 1.1em;
+          line-height: 0.8;
+        }
+        &:hover {
+          background-color: $whitish;
+          font-weight: 600;
+          color: $primaryDark;
+        }
+        &:focus {
+          color: $primaryMed;
+        }
+      }
+    }
+    a{
+      padding: 1em 1em;
+      margin: 1em 0;
+      color: $primaryDark;
+      font-weight: 600;
+    }
+    .menuBtn {
+      position: relative;
+      display: inline-block;
+      margin: 0;
+      padding: 0.5em;
+      background-color: $black;
+      color: $white;
+      left: $sidebar-width;
+      i {
+        display: inline-block;
+        @include transition (all, 0.3s, ease)
+        width: 24px;
+        height: 24px;
+      }
+    }
+    .addCookbook {
+      padding: 1em;
+      div {
+        display: flex;
+        justify-content: flex-end;
+      }
+      button {
+        margin-right: 0.5em;
+      }
+    }
+  }
+}
+
+.hideMenu {
+  .cookbookMarks {
+    left: -$sidebar-width;
+  }
+  .Home {
+    padding-left: 0;
+  }
+}
+
+// ########  #######   #######  ##       ########     ###    ########
+//    ##    ##     ## ##     ## ##       ##     ##   ## ##   ##     ##
+//    ##    ##     ## ##     ## ##       ##     ##  ##   ##  ##     ##
+//    ##    ##     ## ##     ## ##       ########  ##     ## ########
+//    ##    ##     ## ##     ## ##       ##     ## ######### ##   ##
+//    ##    ##     ## ##     ## ##       ##     ## ##     ## ##    ##
+//    ##     #######   #######  ######## ########  ##     ## ##     ##
+
+.sideTools {
+  background-color: $black;
+  position: fixed;
+  right: 0;
+  top: $header-height + 3em;
+  padding: 0.2em 0;
+  @include transition (all, 0.5s, ease)
+
+  &:hover {
+    background-color: $blackest;
+  }
+  i {
+    display: block;
+    padding: 1.2em;
+  }
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: $grayLight;
+  display: flex;
+  justify-content: space-between;
+  button {
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+    background-color: $grayLight;
+    color: $black;
+    font-size: 1em;
+    font-family: $serif-font;
+    &.saveBtn {
+      background-color: $black;
+      color: $white;
+      &.disabled {
+        background-color: $black;
+        a {
+          color: $grayDark;
+        }
+        &:hover {
+          background-color: $black;
+          a {
+            color: $grayDark;
+          }
+        }
+      }
+      &:hover {
+        color: $grayLight;
+        background-color: $blackest;
+      }
+    }
+    &:hover {
+      color: $blackest;
+      background-color: $grayMed;
+    }
+  }
+}
+
+//  ######   #######   #######  ##    ## ########   #######   #######  ##    ##
+// ##    ## ##     ## ##     ## ##   ##  ##     ## ##     ## ##     ## ##   ##
+// ##       ##     ## ##     ## ##  ##   ##     ## ##     ## ##     ## ##  ##
+// ##       ##     ## ##     ## #####    ########  ##     ## ##     ## #####
+// ##       ##     ## ##     ## ##  ##   ##     ## ##     ## ##     ## ##  ##
+// ##    ## ##     ## ##     ## ##   ##  ##     ## ##     ## ##     ## ##   ##
+//  ######   #######   #######  ##    ## ########   #######   #######  ##    ##
+
+.cookBookContainer {
+  width: 100%;
+  flex-direction: column;
+  //justify-content: center;
+  header {
+    background-color: $primaryDark;
+    background-image: url("./img/bg-green.jpg");
+    background-size: cover;
+    background-position: center;
+    color: $white;
+    padding: 6em 2em 4em;
+    font-family: $serif-font;
+    h3 {
+      margin-top: 0.7em;
+      color: $black;
+    }
+  }
+  &.otherUser {
+    header {
+      background-color: $black;
+      background-image: url("./img/bg-black.jpg");
+    }
+  }
+}
+
+.recipeBy {
+  display: none;
+}
+
+.otherUser {
+  .recipeBy {
+    display: block;
+  }
+}
+
+.Add {
+  justify-content: left;
+}
+
+.Recipe {
+  flex-direction: column;
+  .container {
+    max-width: 40em;
+    margin: auto;
+  }
+}
+
+.addRecipe {
+  display: block;
+  color: $black;
+  padding: 1em 0;
+  font-size: 0.8em;
+  &:hover {
+    opacity: 0.6;
+  }
+  i {
+    position: relative;
+    top: 0.2em;
+    margin-right: 0.5em;
+  }
+}
+
+.cardContain {
+  position: relative;
+  top: -3em;
+  padding-left: 1em;
+  padding-right: 1em;
+  column-gap: 1em;
+  column-width: 15em;
+  column-count: 1;
+  @include bp-md {
+    column-count: 2;
+  }
+  @include bp-lg {
+    columns: 3;
+  }
+  @include bp-xl {
+    column-count: 4;
+  }
+  @include bp-xxl {
+    column-count: 6;
+  }
+  &.searchContain {
+    padding-top: $header-height;
+  }
+
+
+  .card {
+     box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
+     background-color: $white;
+     display: inline-block;
+     margin-bottom: 1em;
+     padding-bottom: 1em;
+     width: 100%;
+     border-radius: 0.2em;
+     @include transition (all, 0.5s, ease)
+     &:hover {
+       box-shadow: 0 0 0 2px $primaryDark, 0 2px 3px 2px rgba(54, 40, 28, 0.07);
+     }
+     &:active {
+       @include transition (all, 0.1s, ease)
+       box-shadow: 0 0 0 2px $grayMed;
+       h2 {
+         opacity: 0.85;
+       }
+     }
+     .cardImg {
+       width: 100%;
+       height: 20vw;
+       min-height: 6em;
+       max-height: 12em;
+       background-size: cover;
+       background-position: center;
+       border-radius: 0.2em 0.2em 0 0;
+     }
+     h2 {
+       font-family: $sans-font;
+       padding: 1rem 1.5rem 0.3rem;
+       line-height: 1.2em;
+     }
+     h4 {
+       padding: 0 1.5rem 0;
+       font-size: 0.8em;
+       color: $grayDark;
+     }
+  }
+}
+
+// ########  ########  ######  #### ########  ########
+// ##     ## ##       ##    ##  ##  ##     ## ##
+// ##     ## ##       ##        ##  ##     ## ##
+// ########  ######   ##        ##  ########  ######
+// ##   ##   ##       ##        ##  ##        ##
+// ##    ##  ##       ##    ##  ##  ##        ##
+// ##     ## ########  ######  #### ##        ########
+
+.Recipe {
+  background-color: $white;
+  .container {
+    background-color: $white;
+    font-family: $serif-font;
+    list-style-type: none;
+    column-count: 1;
+    column-gap: 3em;;
+    max-width: 60em;
+    padding: 3em 7%;
+    @include bp-md {
+      padding: 3em;
+    }
+    @include printQuery{
+      font-size: 0.8em;
+    };
+    & > * {
+      break-inside: avoid;
+      padding-bottom: 1.8em;
+    }
+    @include bp-md {
+      column-count: 2;
+    }
+    h1 {
+      font-size: 2em;
+      text-transform: uppercase;
+      font-family: $sans-font;
+      padding-bottom: 1em;
+      @include bp-md {
+        font-size: 2.75em
+      }
+      @include bp-lg {
+        font-size: 3.5em
+      }
+      @include printQuery {
+        font-size: 1.8em;
+        padding-bottom: 0.5em;
+      };
+    }
+    h3 {
+      font-size: 1.6em;
+      padding-bottom: 0.5em;
+    }
+    @include printQuery{
+      //font-size: 0.6em;
+    };
+    li {
+      line-height: 1.2em;
+      padding-bottom: 0.6em;
+    }
+    p {
+    }
+    hr {
+      border: 0.2em solid $primaryLight;
+      width: 3em;
+      padding: 0;
+      margin-bottom: 1.6em;
+      background-color: $primaryLight;
+    }
+    .recipeInfos {
+      font-family: $sans-font;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 1.2em;;
+      p {
+        padding-bottom: 0.5em;
+        @include printQuery {
+          display: inline-block;
+          font-size: 0.9em;
+          padding-right: 1em;
+        }
+      }
+    }
+    .ingredientsList {
+      li {
+      }
+      @include printQuery {
+        display: inline-block;
+        width: 50%;
+      };
+    }
+    .notes {
+      &.displayDesktop {
+        display: none;
+        @include bp-md {
+          display: block;
+        }
+      }
+      &.displayMobile {
+        display: block;
+        @include bp-md {
+          display: none;
+        }
+      }
+    }
+    .prepList {
+      li {
+      }
+      @include bp-md {
+        break-before: always;
+      }
+      @include printQuery {
+        break-before: avoid;
+      }
+    }
+    .anecdote {
+      @include bp-md {
+        border: 2px solid $primaryLight;
+        padding: 3em;
+      }
+    }
+  }
+  .recipeImg {
+    width: 100%;
+    height: 20vw;
+    min-height: 10em;
+    max-height: 30em;
+    background-size: cover;
+    background-position: center;
+    @include printQuery {
+      display: none;
+    };
+  }
+
+}
+
+
+
+// ##        #######   ######   #### ##    ##
+// ##       ##     ## ##    ##   ##  ###   ##
+// ##       ##     ## ##         ##  ####  ##
+// ##       ##     ## ##   ####  ##  ## ## ##
+// ##       ##     ## ##    ##   ##  ##  ####
+// ##       ##     ## ##    ##   ##  ##   ###
+// ########  #######   ######   #### ##    ##
+
+.LoginPage {
+  display: flex;
+  width: 100%;
+  background-image: url("./img/bg-coul.jpg");
+  background-size: cover;
+  align-items: flex-start;
+  padding: 0;
+  @include bp-sm {
+    padding: 0 15%;
+  };
+  .container {
+    padding: 3em 3em 1em;
+    background-color: $white;
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.29);
+    @include bp-sm {
+      max-width: 24em;
+    };
+    .titleSection {
+      padding-bottom: 1em;
+      h1 {
+        font-size: 2.7em;
+      }
+      p {
+        font-family: $serif-font;
+        padding-top: 0.3em;
+        color: $grayMed;
+      }
+    }
+    .Form {
+      padding-bottom: 1em;
+    }
+    .googleLogin {
+      padding-bottom: 1em;
+    }
+    .logSign {
+      & > a > * {
+        display: inline-block;
+      }
+      span {
+        font-family: $serif-font;
+        font-weight: 700;
+        color: $primaryDark;
+        padding-left: 0.5em;
+      }
+    }
+    input {
+      display: block;
+      width: 100%;
+      border: 2px solid $white;
+      &:hover {
+        border: 2px solid $primaryLight;
+      }
+    }
+  }
+  .error {
+    padding-bottom: 1em;
+    color: red;
+  }
+}
+
+// ########  #######  ########  ##     ##
+// ##       ##     ## ##     ## ###   ###
+// ##       ##     ## ##     ## #### ####
+// ######   ##     ## ########  ## ### ##
+// ##       ##     ## ##   ##   ##     ##
+// ##       ##     ## ##    ##  ##     ##
+// ##        #######  ##     ## ##     ##
+
+input, textarea {
+  background-color: $whitish;
+  box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset ;
+  border: 1px solid $whitish;
+
+  &, select {
+    display: block;
+    padding: 0.6em 1em;
+    margin:  0.5em 0;
+    border-radius: 2px;
+    outline: 1px solid $transparentColor;
+    &:focus {
+      outline: 1px solid $primaryLight;
+    }
+  }
+}
+
+label {
+    display: block;
+    padding: 1em 0;
+    font-family: $serif-font;
+    letter-spacing: 0.06em;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+
+.newRecipeContainer {
+    header {
+      width: 100%;
+      background-color: $primaryDark;
+      background-image: url("./img/bg-green.jpg");
+      background-size: cover;
+      background-position: center;
+      color: $white;
+      padding: 8em 2em 3em;
+      h2 {
+        max-width: 13em;
+        margin: auto;
+        font-size: 3em;
+      }
+    }
+}
+
+//  ######  ########  ########    ###    ######## ########    ########  ########  ######  #### ########  ########
+// ##    ## ##     ## ##         ## ##      ##    ##          ##     ## ##       ##    ##  ##  ##     ## ##
+// ##       ##     ## ##        ##   ##     ##    ##          ##     ## ##       ##        ##  ##     ## ##
+// ##       ########  ######   ##     ##    ##    ######      ########  ######   ##        ##  ########  ######
+// ##       ##   ##   ##       #########    ##    ##          ##   ##   ##       ##        ##  ##        ##
+// ##    ## ##    ##  ##       ##     ##    ##    ##          ##    ##  ##       ##    ##  ##  ##        ##
+//  ######  ##     ## ######## ##     ##    ##    ########    ##     ## ########  ######  #### ##        ########
+
+form.createRecipe {
+  background-color: $white;
+  background-image: url();
+  box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
+  padding: 1em 10% 5em;
+  margin: auto;
+  max-width: 100%;
+  position: relative;
+  top: -2em;
+    @include bp-md {
+      padding: 4em;
+      max-width: 40em;
+      border-radius: 0.3em;
+    };
+    h2, h3 {
+        padding: 1.5em 0.5em 0.5em 0;
+    }
+    input, textarea, select {
+        display: block;
+        padding: 0.5em;
+        margin:  0.5em;
+        margin-left: 0;
+        border: 1px solid $grayLight;
+        &:hover {
+          border: 1px solid $primaryLight;
+        }
+    }
+    select {
+      border: 1px solid $black;
+      &:hover {
+        border: 1px solid $primaryMed;
+      }
+    }
+    label {
+        display: block;
+        padding: 1.5em 0.5em 0.8em 0;
+    }
+    textarea {
+      font-family: $sans-font;
+      min-width: 80%;
+      max-width: 80%;
+      @include bp-md {
+        min-width: 30em;
+        max-width: 30em;
+      };
+    }
+    .ingredient, .step, .notes {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1em;
+      @include bp-md {
+        margin-bottom: 0;
+      };
+      input, textarea, select, label {
+        margin-bottom: 0;
+        @include bp-md {
+          display: inline-block;
+        }
+      }
+      .ingredientQuantity {
+        max-width: 6em;
+      }
+      .ingredientItem {
+        min-width: 18em;
+      }
+    }
+    .selectImgInput {
+      background-color: $white;
+      box-shadow: none;
+      border: none;
+    }
+    img {
+      max-width: 6em;
+      max-height: 6em;
+    }
+    .close {
+      background-color: $grayLight;
+      @include transition (all, 0.2s, ease);
+      padding: 0.8em;
+      &:hover {
+        background-color: $primaryLight;
+        padding: 0.8em;
+      }
+      &:focus {
+        padding: 0.8em;
+        background-color: $grayMed;
+      }
+    }
+}
